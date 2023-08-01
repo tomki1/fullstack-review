@@ -17,35 +17,40 @@ var location = path.join(__dirname, '../client/dist');
 app.use(express.static(location));
 
 
-app.post('/repos', async function (req, res) {
+app.post('/repos', function (req, res) {
+  console.log("username from client search", req.body.username);
+
+ // do api request with username
+
+
+ // get api data from github
+
+ // save repo info into database
+
+
   // TODO - your code here!
   // This route should take the github username provided
   // and get the repo information from the github API, then
   // save the repo information in the database
-  const repo = new db.Repo({
-    repo_id: 43245343,
-    repo_name: 'fullstack-review',
-    repo_url: 'www.github.com/fs',
-    user_id: 335545,
-    username: 'coolname',
-    stargazers_count: 3
-  });
-  console.log("in post")
-  try {
-    repo.save() // test with hardcoded
-    .then( item => {
-      console.log(item);
-      res.send("saved to db");
-      }
-    )
-    .catch( err => {
-      res.status(400).send("unable to save to db");
-    });
+  // const repo = new db.Repo({
+  //   repo_id: 432435333,
+  //   repo_name: 'fullstack-review333',
+  //   repo_url: 'www.github.com/fs',
+  //   user_id: 335545,
+  //   username: 'coolname',
+  //   stargazers_count: 3
+  // });
 
-  } catch(error) {
-    res.status(500).json({error: e.message});;
 
-  }
+    // repo.save()
+    // .then( item => {
+    //   console.log(item);
+    //   res.send("saved to db");
+    //   }
+    // )
+    // .catch( err => {
+    //   res.status(400).send("unable to save to db");
+    // });
 });
 
 app.get('/repos', function (req, res) {
