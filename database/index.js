@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/fetcher', { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true});
+mongoose.connect('mongodb://localhost/fetcher', { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true
+, useFindAndModify: false });
 
 const db = mongoose.connection;
 // determine whether there is a db connection error
@@ -30,6 +31,7 @@ let save = (error, result) => {
   // TODO: Your code here
   // This function should save a repo or repos to
   // the MongoDB
+  console.log("in save repo")
   if (error) {
     console.log(error);
   } else {
