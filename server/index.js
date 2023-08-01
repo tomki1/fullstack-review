@@ -32,7 +32,7 @@ app.post('/repos', function (req, res) {
       const repo = new db.Repo({
         repo_id: repos[i].id,
         repo_name: repos[i].name,
-        repo_url: repos[i].url,
+        repo_url: repos[i].html_url,
         user_id: repos[i].owner.id,
         username: repos[i].owner.login,
         stargazers_count: repos[i].stargazers_count
@@ -41,7 +41,7 @@ app.post('/repos', function (req, res) {
       repo.save()
       .then( item => {
         // console.log(item);
-        // res.send("saved to db");
+        res.send("saved to db"); // ?
       }
     )
       .catch( err => {
@@ -68,6 +68,8 @@ app.post('/repos', function (req, res) {
 
   // })
   .catch(error => console.log(error));
+
+  res.send("post successful");
 
 });
 
@@ -109,6 +111,9 @@ app.get('/repos', function (req, res) {
   // This route should send back the top 25 repos
   // sort stargazers count in descending order and limit to 25 documents
   db.Repo.find({}).sort({stargazers_count: -1}).limit(25).exec(function(err, docs) {
+    if (err) {
+      console.log(err);
+    }
     res.send(docs);
   });
 

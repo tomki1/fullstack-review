@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 
 
-const Search = ({ onSearch }) => {
+const Search = ({ onSearch, loadData }) => {
 
-  const[term, setTerm] = useState('')
+  const[term, setTerm] = useState('');
 
   const onChange = (e) => {
     setTerm(e.target.value);

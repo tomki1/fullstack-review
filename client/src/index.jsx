@@ -1,36 +1,70 @@
-import React, { useState } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import Search from './components/Search.jsx';
 import RepoList from './components/RepoList.jsx';
 import axios from 'axios';
+const { useState, useEffect } = React;
+
 
 const App = () => {
 
   const [repos, setRepos] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // load the data from the server
+  var loadData = () => {
+    console.log("IN load data")
+    axios({
+      method: 'get',
+      url: '/repos',
+      // headers: options.headers,
+      responseType: 'json'
+    })
+      .then((response) => {
+        console.log('in response get', response)
+        // change state of repos
+        setRepos(response.data);
+      })
+      .catch(error => console.log('Error', error.message))
+      .finally(() => {console.log("loaded again");
+
+        setIsLoading(false);});
+  }
+
+
+
+  useEffect(loadData, []);
 
   const search = (term) => {
     console.log(`${term} was searched`);
-    axios({
+    return axios({
       method: 'post',
       url: '/repos',
       data: {
         username: term
       }
     })
-    .then(function (response) {
-      console.log(response);
+    .then((response) => {
+      // console.log("in response", response)
+
     })
-    .catch(function (error) {
+    .catch((error) => {
       console.log(error);
     });
+    loadData();
+  }
+
+  if (isLoading) {
+    console.log("loading");
+    return null;
   }
 
   return (
     <div>
       <h1>Github Fetcher</h1>
       <RepoList repos={repos}/>
-      <Search onSearch={search}/>
+      <Search onSearch={search} loadData={loadData}/>
     </div>
   );
 }
