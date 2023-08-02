@@ -39,11 +39,6 @@ app.post('/repos', function (req, res) {
       });
       // save the document to mongoDB fetcher database
       repo.save()
-      .then( item => {
-        // console.log(item);
-        res.send("saved to db"); // ?
-      }
-    )
       .catch( err => {
         // if the document is not unique, then it is already in our fetcher DB
         // update its information
@@ -53,57 +48,14 @@ app.post('/repos', function (req, res) {
           if (err) {
               console.log("error with updating");
           }
-
-          // console.log("updated", doc);
         });
 
-        // res.status(400).send("unable to save to db");
-      });
 
-
-
-    }
+      })
+      .then(() => res.status(201).send())
+        }
   })
-  // .then(oneRepo => {
-
-  // })
-  .catch(error => console.log(error));
-
-  res.send("post successful");
-
 });
-
-//  .then(data => res.sendStatus(201))
-//  .catch(err => res.sendStatus(500));
-
- // get api data from github
-
- // save repo info into database
-
-
-  // TODO - your code here!
-  // This route should take the github username provided
-  // and get the repo information from the github API, then
-  // save the repo information in the database
-  // const repo = new db.Repo({
-  //   repo_id: 432435333,
-  //   repo_name: 'fullstack-review333',
-  //   repo_url: 'www.github.com/fs',
-  //   user_id: 335545,
-  //   username: 'coolname',
-  //   stargazers_count: 3
-  // });
-
-
-    // repo.save()
-    // .then( item => {
-    //   console.log(item);
-    //   res.send("saved to db");
-    //   }
-    // )
-    // .catch( err => {
-    //   res.status(400).send("unable to save to db");
-    // });
 
 
 app.get('/repos', function (req, res) {

@@ -47,12 +47,17 @@ const App = () => {
     })
     .then((response) => {
       // console.log("in response", response)
+      loadData();
 
     })
     .catch((error) => {
       console.log(error);
-    });
-    loadData();
+    })
+    .then(() => {
+      return axios.get('/repos')
+    }).then((response) => {
+      setRepos(response.data);
+    })
   }
 
   if (isLoading) {
